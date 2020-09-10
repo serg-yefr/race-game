@@ -69,3 +69,38 @@ table {
     background: white;
     left: 145px;
 }
+.start{
+    position: absolute;
+    top: 90%;
+    left: 25%;
+    width: 10%;
+    margin: 0;
+    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    border-radius: 6px;
+    cursor: pointer;
+    color: black;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 6px 24px;
+    text-decoration: none;
+    outline: none;
+    z-index: 200;
+    text-align: center;
+}
+.start:hover {
+    background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%);
+}
+.score{
+    position: absolute;
+    display: none;
+    width: 100%;
+    padding: 1rem 0;
+    font-size: 1.5rem;
+    text-align: center;
+    top: 0;
+    left: 0;
+    background: black;
+    color: white;
+    z-index: 200;
+
+}

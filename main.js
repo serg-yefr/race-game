@@ -3,7 +3,6 @@ const score = document.querySelector('.score'),
     gameArea = document.querySelector('.game-area'),
     car = document.createElement('div');
 car.classList.add('car');
-
 start.addEventListener('click', startGame);
 
 document.addEventListener('keydown', startRun);
@@ -19,7 +18,7 @@ const keys = {
 const settings = {
     start: false,
     score: 0,
-    speed: 3,
+    speed: 10,
     traffic: 3
 }
 
@@ -29,6 +28,8 @@ function getQuantityElements(heightElement) {
 
 function startGame() {
     start.classList.add('hide');
+    score.style.display = 'block';
+    gameArea.innerHTML = '';
     for (let i = 0; i < getQuantityElements(100); i++){
         const line = document.createElement('div');
         line.classList.add('line');
@@ -45,9 +46,12 @@ function startGame() {
         enemy.style.background = 'transparent url("images/enemy.png") center / cover no-repeat';
         gameArea.appendChild(enemy);
     }
-
+    settings.score = 0;
     settings.start = true;
     gameArea.appendChild(car);
+    car.style.left = '125px';
+    car.style.top = 'auto';
+    car.style.bottom = '10px';
     settings.x = car.offsetLeft;
     settings.y = car.offsetTop;
     requestAnimationFrame(playGame);
@@ -55,6 +59,9 @@ function startGame() {
 
 function playGame() {
     if (settings.start === true) {
+        settings.score += settings.speed;
+        score.innerHTML = 'Score:<br>' + settings.score;
+
         moveRoad();
         moveEnemy();
         if (keys.ArrowLeft && settings.x > 0){
@@ -97,6 +104,12 @@ function moveRoad() {
 function moveEnemy() {
     let enemies = document.querySelectorAll('.enemy');
     enemies.forEach(function (item) {
+        let carRect = car.getBoundingClientRect();
+        let enemyRect = item.getBoundingClientRect();
+        if (carRect.top <= enemyRect.bottom && carRect.right >= enemyRect.left && carRect.left <= enemyRect.right && carRect.bottom >= enemyRect.top) {
+            settings.start = false;
+            start.classList.remove('hide');
+        }
         item.y += settings.speed / 2;
         item.style.top = item.y + 'px';
         if (item.y >= document.documentElement.clientHeight) {
